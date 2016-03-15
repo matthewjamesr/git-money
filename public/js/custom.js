@@ -1,5 +1,5 @@
 /* =================================
-   LOADER                     
+   LOADER
 =================================== */
 // makes sure the whole site is loaded
 jQuery(window).load(function() {
@@ -22,17 +22,17 @@ $(".video-container").fitVids();
 
 $('.mailchimp').ajaxChimp({
     callback: mailchimpCallback,
-    url: "http://webdesign7.us6.list-manage.com/subscribe/post?u=9445a2e155b82208d73433060&amp;id=16dc80e353" //Replace this with your own mailchimp post URL. Don't remove the "". Just paste the url inside "".  
+    url: "http://webdesign7.us6.list-manage.com/subscribe/post?u=9445a2e155b82208d73433060&amp;id=16dc80e353" //Replace this with your own mailchimp post URL. Don't remove the "". Just paste the url inside "".
 });
 
 function mailchimpCallback(resp) {
      if (resp.result === 'success') {
         $('.subscription-success').html('<i class="icon_check_alt2"></i><br/>' + resp.msg).fadeIn(1000);
         $('.subscription-error').fadeOut(500);
-        
+
     } else if(resp.result === 'error') {
         $('.subscription-error').html('<i class="icon_close_alt2"></i><br/>' + resp.msg).fadeIn(1000);
-    }  
+    }
 }
 
 
@@ -46,7 +46,7 @@ $(document).ready(function() {
     filter: ':not(.external)',
     changeHash: true
   });
-  
+
 });
 
 
@@ -103,8 +103,8 @@ jQuery(function( $ ){
 =================================== */
 function alturaMaxima() {
   var altura = $(window).height();
-  $(".full-screen").css('min-height',altura); 
-  
+  $(".full-screen").css('min-height',altura);
+
 }
 
 $(document).ready(function() {
@@ -259,8 +259,8 @@ $('.expand-form').simpleexpand({
 /* =================================
 ===  STELLAR                    ====
 =================================== */
-$(window).stellar({ 
-horizontalScrolling: false 
+$(window).stellar({
+horizontalScrolling: false
 });
 
 
@@ -288,3 +288,35 @@ $(document).ready(function(){
         return false;
     });
 });
+
+
+/* =================================
+===  Language Detection         ====
+=================================== */
+
+// Enter ISO 639-2 letter Language codes to detect (see: http://www.w3.org/WAI/ER/IG/ert/iso639.htm):
+var langcodes=new Array("en", "fr", "es", "ja", "de", "el", "hi", "ru", "default")
+
+// Enter corresponding redirect URLs (last one is for default URL):
+var langredirects=new Array("translations/english.html", "translations/french.html", "translations/spanish.html", "translations/japanese.html", "translations/german.html", "translations/greek.html", "translations/hindi.html", "translations/russian.html", "index.html")
+
+var languageinfo=navigator.language? navigator.language : navigator.userLanguage
+var gotodefault=1
+
+function redirectpage(dest){
+	if (window.location.replace)
+	window.location.replace(dest)
+	else
+	window.location=dest
+}
+
+for (i=0;i<langcodes.length-1;i++){
+	if (languageinfo.substr(0,2)==langcodes[i]){
+		redirectpage(langredirects[i])
+		gotodefault=0
+		break
+	}
+}
+
+if (gotodefault)
+redirectpage(langredirects[langcodes.length-1])
